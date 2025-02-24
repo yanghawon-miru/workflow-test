@@ -12,10 +12,30 @@ android {
         applicationId = "com.mirusystems.workflow_test"
         minSdk = 30
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 10000
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        release {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            applicationVariants.all {
+                val variant = this
+                variant.outputs.all {
+                    val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+                    val versionName = variant.versionName
+                    val versionCode = variant.versionCode
+                    output.outputFileName = "work-flow-test-v$versionName($versionCode).apk"
+                }
+            }
+        }
     }
 
     buildTypes {
