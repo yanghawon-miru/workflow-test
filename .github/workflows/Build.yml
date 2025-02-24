@@ -28,14 +28,14 @@ jobs:
     - name: List output files
       run: ls -R app/build/outputs/apk
 
+    - name: Install rclone
+      run: |
+        curl https://rclone.org/install.sh | sudo bash  # rclone 설치
+
     - name: Setup rclone
       run: |
         mkdir -p ~/.config/rclone
         echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
-
-    - name: Install rclone
-      run: |
-        curl https://rclone.org/install.sh | sudo bash  # rclone 설치
 
     - name: Upload APK to Google Drive
       run: |
