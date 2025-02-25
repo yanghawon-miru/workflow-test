@@ -56,19 +56,19 @@ jobs:
       #          rclone copy "$APK_PATH" "$DESTINATION" --progress --vv # APK 파일을 Google Drive에 업로드
       #
 
-      - name: Set up rclone config
-        run: |
-          echo "$GDRIVE_RCLONE_CONFIG" > rclone.conf
-          shell: bash
-        env:
-          GDRIVE_RCLONE_CONFIG: ${{ secrets.GDRIVE_RCLONE_CONFIG }}
-
       - name: Set up service account JSON
         run: |
           echo "$GDRIVE_SERVICE_ACCOUNT_JSON" > sa.json
         shell: bash
         env:
           GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+
+      - name: Set up rclone config
+        run: |
+          echo "$GDRIVE_RCLONE_CONFIG" > rclone.conf
+          shell: bash
+        env:
+          GDRIVE_RCLONE_CONFIG: ${{ secrets.GDRIVE_RCLONE_CONFIG }}
 
       #      - name: Run rclone
       #        run: |
