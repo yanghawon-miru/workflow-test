@@ -37,7 +37,7 @@ jobs:
       # 6. rclone 설치
       - name: Install rclone
         run: |
-          curl https://rclone.org/install.sh | sudo bash  # rclone 설치
+          curl https://rclone.org/install.sh | sudo bash 
 
       #      # 7. Google Drive 인증 설정 (Secrets에서 rclone config JSON을 가져오기)
       #      - name: Setup rclone with secrets
@@ -57,16 +57,16 @@ jobs:
       #
 
       - name: Set up service account JSON
+        shell: bash  # ✅ shell 옵션을 run 키 바깥에 위치시킴
         run: |
           echo "$GDRIVE_SERVICE_ACCOUNT_JSON" > sa.json
-        shell: bash
         env:
           GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
 
       - name: Set up rclone config
+        shell: bash  # ✅ shell 옵션을 run 키 바깥에 위치시킴
         run: |
           echo "$GDRIVE_RCLONE_CONFIG" > rclone.conf
-          shell: bash
         env:
           GDRIVE_RCLONE_CONFIG: ${{ secrets.GDRIVE_RCLONE_CONFIG }}
 
