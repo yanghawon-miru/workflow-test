@@ -53,4 +53,4 @@ jobs:
           DESTINATION="gdrive:MyApp/Versions/$VERSION/$(basename $APK_PATH)"  # 업로드 경로 설정
           
           echo "Uploading $APK_PATH to $DESTINATION"
-          rclone copy "$APK_PATH" "$DESTINATION" --progress --vv # APK 파일을 Google Drive에 업로드
+          rclone copy "$APK_PATH" "$DESTINATION" --progress -vv # APK 파일을 Google Drive에 업로드
