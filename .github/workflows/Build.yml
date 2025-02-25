@@ -64,9 +64,10 @@ jobs:
           GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
 
       - name: Set up rclone config
-        shell: bash  # ✅ shell 옵션을 run 키 바깥에 위치시킴
+        shell: bash
         run: |
-          echo "$GDRIVE_RCLONE_CONFIG" > rclone.conf
+          mkdir -p ~/.config/rclone
+          echo "$GDRIVE_RCLONE_CONFIG" > ~/.config/rclone/rclone.conf
         env:
           GDRIVE_RCLONE_CONFIG: ${{ secrets.GDRIVE_RCLONE_CONFIG }}
 
