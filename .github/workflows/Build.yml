@@ -2,12 +2,11 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "release" ]
   workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +28,7 @@ jobs:
 
       # 4. APK 빌드
       - name: Build APK with Gradle
-        run: ./gradlew assembleRelease  # release 빌드를 실행합니다.
+        run: ./gradlew build  # release 빌드를 실행합니다.
 
       # 5. APK 파일 목록 확인
       - name: List APK files
@@ -40,12 +39,11 @@ jobs:
         run: |
           curl https://rclone.org/install.sh | sudo bash  # rclone 설치
 
-      # 7. rclone 설정
-      - name: Configure rclone with Google credentials
+      # 7. Google Drive 인증 설정 (Secrets에서 rclone config JSON을 가져오기)
+      - name: Setup rclone with secrets
         run: |
-          mkdir -p ~/.config/rclone  # rclone 설정 디렉토리 생성
-          echo "${{ secrets.GOOGLE_CREDENTIALS }}" > ~/gdrive.json  # 서비스 계정 JSON 파일을 임시로 저장
-          rclone config create gdrive drive service_account_file=~/gdrive.json  # Google Drive를 rclone에 설정
+          mkdir -p ~/.config/rclone  # rclone 설정 파일 저장 폴더 만들기
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf  # secrets에서 JSON을 읽어 rclone 설정
 
       # 8. APK 파일 Google Drive에 업로드
       - name: Upload APK to Google Drive
@@ -55,4 +53,4 @@ jobs:
           DESTINATION="gdrive:MyApp/Versions/$VERSION/$(basename $APK_PATH)"  # 업로드 경로 설정
           
           echo "Uploading $APK_PATH to $DESTINATION"
-          rclone copy "$APK_PATH" "$DESTINATION" --progress  # APK 파일을 Google Drive에 업로드
+          rclone copy "$APK_PATH" "$DESTINATION" --progress --vv # APK 파일을 Google Drive에 업로드
