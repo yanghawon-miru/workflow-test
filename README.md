@@ -62,3 +62,14 @@ google drive에 업로드하는 어플
     - vm에서 keystore 로드하는 방법에 대해 필요
     - 아니면 secrets에 base64로 인코딩하여 넣을 수 있도록
     - 릴리즈 시 파일 명에 버전 네임 필수
+- **Firebase App Distribution Github Action 사용 고려**(https://github.com/marketplace/actions/firebase-app-distribution)
+```
+  name: Upload artifact to Firebase Distribution with testers
+  uses: ./
+  with:
+    appId: ${{secrets.FIREBASE_APP_ID}}
+    token: ${{secrets.FIREBASE_TOKEN}}
+    testers: "test@test.com, test2@test2.com"
+    releaseNotesFile: README.md
+    file: ApiDemos-debug.apk
+```
